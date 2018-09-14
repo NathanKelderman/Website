@@ -1,16 +1,18 @@
 
+var MyCSSRules;
+
 describe("Web Page Homework", () => {
   const MY_HTML_FILE = "index.html";
   var mTable;
   var page, pageStr;
-  var cssURL, MyCSSRules;
+  var cssURL;
   
   const findSelectorWithPropAndValue = (prop, value) => {
     // console.debug(`Looking for selector with property ${prop}`)
     if (!MyCSSRules) return [];
     
     var result = [];
-    for (k = 0; k < MyCSSRules.length; k++) {
+    for (let k = 0; k < MyCSSRules.length; k++) {
       // prop is a CSSStyleRule
       const rule = MyCSSRules[k];
       console.debug(`Selector ${rule.cssText}`);
@@ -23,7 +25,7 @@ describe("Web Page Homework", () => {
       if (!value || val == value) {
         result.push(rule);
       }
-      // for (s in rule.style) {
+      // for (let s in rule.style) {
       //   const key = rule.style[s];
       //   const val = rule.style[key];
       //   if (key == prop && val == compareRef) {
@@ -36,11 +38,17 @@ describe("Web Page Homework", () => {
     return result;
   }
   
-  const findClassInCSS = klazname => {
-    for (k = 0; k < MyCSSRules.length; k++) {
+  function findClassInCSS (klazname) {
+    console.debug(`Looking for class ${klazname} in ${MyCSSRules.length} CSS rules`);
+    if (MyCSSRules.length == 0) {
+      alert ("Unable to load CSS rules, try to clear your browser cache");
+    }
+    for (let k = 0; k < MyCSSRules.length; k++) {
       const rule = MyCSSRules[k];
-      if (rule.selectorText == '.' + klazname)
-      return true;
+      console.debug("Check against",  rule);
+      if (rule.selectorText.indexOf('.' + klazname) >= 0) {
+        return true;
+      }
     }
     console.debug(`Class ${klazname} is not defined`);
     return false;
@@ -48,17 +56,17 @@ describe("Web Page Homework", () => {
   
   const matchElementsWithStyles = (elems, selectors) => {
     var whichOnes = [];
-    for (k = 0; k < selectors.length; k++) {
+    for (let k = 0; k < selectors.length; k++) {
       const toks = selectors[k].selectorText.split(",");
-      for (m = 0; m < toks.length; m++) {
+      for (let m = 0; m < toks.length; m++) {
         const elems = page.querySelectorAll(toks[m]);
         if (elems)
           whichOnes.push(...elems);
       }
     }
-    for (k = 0; k < elems.length; k++) {
+    for (let k = 0; k < elems.length; k++) {
       const el = elems[k];
-      for (m = 0; m < whichOnes.length; m++) {
+      for (let m = 0; m < whichOnes.length; m++) {
         const cmp = whichOnes[m];
         if (el.nodeName == cmp.nodeName && el.className == cmp.className) 
           return true;
@@ -194,7 +202,7 @@ describe("Web Page Homework", () => {
   
   it("has <heading>", () => {
     // check heading h1, h2, ..., h6
-    for (var level = 1; level <= 6; level++) {
+    for (let level = 1; level <= 6; level++) {
       const el = page.querySelector("h" + level);
       expect(el).not.toBeNull();
       if (el) return;
@@ -286,12 +294,21 @@ describe("Web Page Homework", () => {
       fail();
       return;
     }
+    console.log("classes in mainTable divs are defined");
     const divsWithClass = mTable.querySelectorAll("tr > td div[class]");
-    for (k = 0; k < divsWithClass.length; k++) {
+    for (let k = 0; k < divsWithClass.length; k++) {
       const el = divsWithClass[k];
-      const klazName = el.className.split(" ");
-      expect(findClassInCSS(klazName)).toBeTruthy();
+      const klazNames = el.className.split(" ");
+      for (let m = 0; m < klazNames.length; m++) {
+        const inCss = findClassInCSS(klazNames[m]);
+        console.log(`Classname is ${klazNames[m]} ${inCss}`);
+        if (!inCss) {
+          fail();
+          return;
+        }
+      }
     }
+    expect(true).toBeTruthy();
   })
   
   it("topleft cell in main table contains unordered list", () => {
@@ -449,7 +466,7 @@ describe("Web Page Homework", () => {
   it("the 'best' class is italicized", () => {
     const selectors = findSelectorWithPropAndValue("font-style", "italic");
     expect(selectors.length).toBeGreaterThan(0);
-    for (k = 0; k < selectors.length; k++) {
+    for (let k = 0; k < selectors.length; k++) {
       const s = selectors[k];
       if (s.selectorText == ".best") {
         expect(true).toBeTruthy();
@@ -475,7 +492,7 @@ describe("Web Page Homework", () => {
     expect(out).toBeTruthy();
 
     // Confirm that pseudo-element :nth-child is used
-    for (k = 0; k < selectors.length; k++) {
+    for (let k = 0; k < selectors.length; k++) {
       const sel = selectors[k];
       if (sel.selectorText.indexOf("nth-child") != -1)
         return;    
@@ -484,6 +501,7 @@ describe("Web Page Homework", () => {
   })
 
   it("'courseTable' uses nth-child pseudo class to alternate background", () => {
+    // must also try 'background-color'
     const selectors = findSelectorWithPropAndValue("background");
     expect(selectors.length).toBeGreaterThan(0);
     const columns = page.querySelectorAll("#courseTable tr");
@@ -491,7 +509,7 @@ describe("Web Page Homework", () => {
     expect(out).toBeTruthy();
 
     // Confirm that pseudo-element :nth-child is used
-    for (k = 0; k < selectors.length; k++) {
+    for (let k = 0; k < selectors.length; k++) {
       const sel = selectors[k];
       if (sel.selectorText.indexOf("nth-child") != -1)
         return;    

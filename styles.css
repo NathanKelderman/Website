@@ -1,9 +1,10 @@
-body { width: 70%; margin: 0 auto; font: medium times; }
+body { width: 70%; margin: 0 auto; font: medium times; background-color: blanchedalmond; }
 
 .nathan { float: right;  margin-bottom: 5px; margin-left: 5px; }
 
 #mainTable { width: 70%; }
 #mainTable tr td:nth-child(1) { width: 300px; }
+#mainTable tr td div { background-color: blanchedalmond; }
 
 .best { font-style: italic; }
 
@@ -17,7 +18,7 @@ table p { font-size: small; }
     width: 100px;
 }
 
-.mattCarriker { width: 200px; margin: auto; height: auto; margin-bottom: 5px; }
+.mattCarriker { width: 200px; margin: 0 auto; display: block; }
 
 .cellOne { background: white; }
 .cellTwo { background: white; }
