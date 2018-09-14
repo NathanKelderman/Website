@@ -1,17 +1,24 @@
 body { width: 70%; margin: 0 auto; font: medium times; }
-.nathan { float: right;  margin-bottom: 5px; }
+
+.nathan { float: right;  margin-bottom: 5px; margin-left: 5px; }
+
 #mainTable { width: 70%; }
 #mainTable tr td:nth-child(1) { width: 300px; }
-#courseTable { border: 1px solid black; }
+
 .best { font-style: italic; }
+
 table p { font-size: small; }
+
+#courseTable { border: 1px solid black; }
 #courseTable tr:nth-child(even){ background: lightgrey }
 #courseTable tr:nth-child(odd){ background: white }
 #courseTable tr td:nth-child(1), #courseTable tr td:nth-child(3) {
     text-align: center;
     width: 100px;
 }
-.mattCarriker { width: 300px; height: auto; margin-bottom: 5px; }
+
+.mattCarriker { width: 200px; margin: auto; height: auto; margin-bottom: 5px; }
+
 .cellOne { background: white; }
 .cellTwo { background: white; }
 .cellThree { background: white; }
