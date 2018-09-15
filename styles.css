@@ -2,9 +2,16 @@ body { width: 70%; margin: 0 auto; font: medium times; background-color: blanche
 
 .nathan { float: right;  margin-bottom: 5px; margin-left: 5px; }
 
-#mainTable { width: 70%; }
+#mainTable { 
+    /*border: 7px solid black; 
+    box-shadow: 10px 10px darkred;
+    border-collapse: collapse; */
+
+    width: 70%; 
+}
 #mainTable tr td:nth-child(1) { width: 300px; }
 #mainTable tr td div { background-color: blanchedalmond; }
+#mainTable tr td { border: 2px solid black; }
 
 .best { font-style: italic; }
 
@@ -12,7 +19,7 @@ table p { font-size: small; }
 
 #courseTable { border: 1px solid black; }
 #courseTable tr:nth-child(even){ background: lightgrey }
-#courseTable tr:nth-child(odd){ background: white }
+#courseTable tr:nth-child(odd){ background: grey }
 #courseTable tr td:nth-child(1), #courseTable tr td:nth-child(3) {
     text-align: center;
     width: 100px;
